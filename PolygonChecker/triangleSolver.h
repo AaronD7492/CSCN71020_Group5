@@ -1,10 +1,12 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
+
 typedef struct point {
 	double x;
 	double y;
 } POINT;
+
 char* analyzeTriangle(int side1, int side2, int side3);
 void calculateTriangleAngle(int side1, int side2, int side3, double angles[]);
 bool isATriangle(int side1, int side2, int side3);

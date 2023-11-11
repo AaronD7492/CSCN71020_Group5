@@ -35,10 +35,10 @@ int main() {
 			POINT points[4] = { 0, 0 , 0, 0 };
 			getRectanglePoints(points);
 
-			if (isRectangle(points[0], points[1], points[2], points[3])) {
+			if (isRectangle(points[0], points[1], points[2], points[3])) { // checks if the function is a rectangle
 				printf("The given points form a rectangle.\n");
-				printf("The perimeter of the rectangle is: %.2lf\n", calculatePerimeter(points[0], points[1], points[2], points[3]));
-				printf("The area of the rectangle is: %.2lf\n", calculateArea(points[0], points[1], points[2], points[3]));
+				printf("The perimeter of the rectangle is: %.2lf\n", calculatePerimeter(points[0], points[1], points[2], points[3]));// Calls fucntion to calculate permieter
+				printf("The area of the rectangle is: %.2lf\n", calculateArea(points[0], points[1], points[2], points[3]));// Calls fucntion to calculate area
 			}
 			else {
 				printf("The given points do not form a rectangle.\n");
