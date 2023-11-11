@@ -65,7 +65,6 @@ bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4) {
 	return false;
 }
 
-
 double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4) {
 	return calculateDistance(p1, p2) + calculateDistance(p2, p3) + calculateDistance(p3, p4) + calculateDistance(p4, p1);
 }
@@ -79,6 +78,9 @@ double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4) {
 void getRectanglePoints(POINT* points) {
 	for (int i = 0; i < 4; i++) {
 		printf("Enter x and y for point %d: ", i + 1);
-		scanf("%lf %lf", &points[i].x, &points[i].y);
+		while (scanf("%lf %lf", &points[i].x, &points[i].y) != 2) {
+			printf("Invalid input. Please enter two numbers.\n");
+			while (getchar() != '\n');  // clear input buffer
+		}
 	}
 }

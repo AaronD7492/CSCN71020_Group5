@@ -80,7 +80,10 @@ int* getTriangleSides(int* triangleSides) {
 	printf_s("Enter the three sides of the triangle: ");
 	for (int i = 0; i < 3; i++)
 	{
-		scanf_s("%d", &triangleSides[i]);
+		while (scanf_s("%d", &triangleSides[i]) != 1) {
+			printf("Invalid input. Please enter a number.\n");
+			while (getchar() != '\n');  // clear input buffer
+		}
 	}
 	return triangleSides;
 }
