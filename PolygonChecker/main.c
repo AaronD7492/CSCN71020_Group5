@@ -19,9 +19,9 @@ int main() {
 			printf_s("Triangle selected.\n");
 			int triangleSides[3] = { 0, 0, 0 };
 			int* triangleSidesPtr = getTriangleSides(triangleSides);
-			if (isATriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2])){
+			if (isATriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2])){							//Checks if the function is a triangle
 				double angles[3];
-				calculateTriangleAngle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2], angles);
+				calculateTriangleAngle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2], angles);			//Calls the function to calculate the angles
 				char* result = analyzeTriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2]);
 				printf("The angles of the triangle are: %0.3lf, %0.3lf, %0.3lf\n", angles[0], angles[1], angles[2]);
 				printf_s("It is a %s\n", result);
