@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <stdbool.h>
@@ -46,4 +47,38 @@ void calculateTriangleAngle(int side1, int side2, int side3, double angles[]) {
 	angles[0] = angleA * 180 / M_PI;
 	angles[1] = angleB * 180 / M_PI;
 	angles[2] = angleC * 180 / M_PI;
+}
+
+
+double calculateDistance(POINT p1, POINT p2) {
+	return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
+}
+
+bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4) {
+	double d1 = calculateDistance(p1, p3);
+	double d2 = calculateDistance(p2, p4);
+
+	if (d1 == d2) {
+		return true;
+	}
+
+	return false;
+}
+
+
+double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4) {
+	return calculateDistance(p1, p2) + calculateDistance(p2, p3) + calculateDistance(p3, p4) + calculateDistance(p4, p1);
+}
+
+double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4) {
+	double a = calculateDistance(p1, p2);
+	double b = calculateDistance(p2, p3);
+	return a * b;
+}
+
+void getRectanglePoints(POINT* points) {
+	for (int i = 0; i < 4; i++) {
+		printf("Enter x and y for point %d: ", i + 1);
+		scanf("%lf %lf", &points[i].x, &points[i].y);
+	}
 }

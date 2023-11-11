@@ -31,7 +31,18 @@ int main() {
 			}
 			break;
 		case 2:
-			///TODO: Rectangle function
+			printf_s("Rectangle selected.\n");
+			POINT points[4] = { 0, 0 , 0, 0 };
+			getRectanglePoints(points);
+
+			if (isRectangle(points[0], points[1], points[2], points[3])) {
+				printf("The given points form a rectangle.\n");
+				printf("The perimeter of the rectangle is: %.2lf\n", calculatePerimeter(points[0], points[1], points[2], points[3]));
+				printf("The area of the rectangle is: %.2lf\n", calculateArea(points[0], points[1], points[2], points[3]));
+			}
+			else {
+				printf("The given points do not form a rectangle.\n");
+			}
 			break;
 		case 0:
 			continueProgram = false;
@@ -73,4 +84,3 @@ int* getTriangleSides(int* triangleSides) {
 	}
 	return triangleSides;
 }
-
