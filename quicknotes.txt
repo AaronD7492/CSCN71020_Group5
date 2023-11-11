@@ -1,0 +1,8 @@
+What to do
+-Input validation (before analyzeTriangle function gets called)
+-while loop for validation
+-check if the inputs make a triangle
+-calculate the angles for the triangle
+
+new feature (later) - new switch case input
+-

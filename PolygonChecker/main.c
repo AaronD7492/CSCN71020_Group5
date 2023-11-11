@@ -19,9 +19,19 @@ int main() {
 			printf_s("Triangle selected.\n");
 			int triangleSides[3] = { 0, 0, 0 };
 			int* triangleSidesPtr = getTriangleSides(triangleSides);
-			//printf_s("! %d\n", triangleSidesPtr[0]);
-			char* result = analyzeTriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2]);
-			printf_s("%s\n", result);
+			if (isATriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2])){
+				double angles[3];
+				calculateTriangleAngle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2], angles);
+				char* result = analyzeTriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2]);
+				printf("The angles of the triangle are: %0.3lf, %0.3lf, %0.3lf\n", angles[0], angles[1], angles[2]);
+				printf_s("It is a %s\n", result);
+			}
+			else {
+				printf("The given sides do not form a triangle\n");
+			}
+			break;
+		case 2:
+			///TODO: Rectangle function
 			break;
 		case 0:
 			continueProgram = false;
@@ -44,6 +54,7 @@ void printWelcome() {
 
 int printShapeMenu() {
 	printf_s("1. Triangle\n");
+	printf_s("2. Rectangle\n");
 	printf_s("0. Exit\n");
 
 	int shapeChoice;
@@ -62,3 +73,4 @@ int* getTriangleSides(int* triangleSides) {
 	}
 	return triangleSides;
 }
+
