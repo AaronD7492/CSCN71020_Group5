@@ -19,9 +19,9 @@ int main() {
 			printf_s("Triangle selected.\n");
 			int triangleSides[3] = { 0, 0, 0 };
 			int* triangleSidesPtr = getTriangleSides(triangleSides);
-			if (isATriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2])){							//Checks if the function is a triangle
+			if (isATriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2])){											//Checks if the function is a triangle
 				double angles[3];
-				calculateTriangleAngle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2], angles);			//Calls the function to calculate the angles
+				calculateTriangleAngle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2], angles);							//Calls the function to calculate the angles
 				char* result = analyzeTriangle(triangleSidesPtr[0], triangleSidesPtr[1], triangleSidesPtr[2]);
 				printf("The angles of the triangle are: %0.3lf, %0.3lf, %0.3lf\n", angles[0], angles[1], angles[2]);
 				printf_s("It is a %s\n", result);
@@ -35,10 +35,10 @@ int main() {
 			POINT points[4] = { 0, 0 , 0, 0 };
 			getRectanglePoints(points);
 
-			if (isRectangle(points[0], points[1], points[2], points[3])) { // checks if the function is a rectangle
+			if (isRectangle(points[0], points[1], points[2], points[3])) {																// checks if the function is a rectangle
 				printf("The given points form a rectangle.\n");
-				printf("The perimeter of the rectangle is: %.2lf\n", calculatePerimeter(points[0], points[1], points[2], points[3]));// Calls fucntion to calculate permieter
-				printf("The area of the rectangle is: %.2lf\n", calculateArea(points[0], points[1], points[2], points[3]));// Calls fucntion to calculate area
+				printf("The perimeter of the rectangle is: %.2lf\n", calculatePerimeter(points[0], points[1], points[2], points[3]));	// Calls fucntion to calculate permieter
+				printf("The area of the rectangle is: %.2lf\n", calculateArea(points[0], points[1], points[2], points[3]));				// Calls fucntion to calculate area
 			}
 			else {
 				printf("The given points do not form a rectangle.\n");
@@ -49,6 +49,7 @@ int main() {
 			break;
 		default:
 			printf_s("Invalid value entered.\n");
+			while (getchar() != '\n');
 			break;
 		}
 	}
@@ -85,7 +86,7 @@ int* getTriangleSides(int* triangleSides) {
 	{
 		while (scanf_s("%d", &triangleSides[i]) != 1) {
 			printf("Invalid input. Please enter a number.\n");
-			while (getchar() != '\n');
+			while (getchar() != '\n'); 
 		}
 	}
 	return triangleSides;
