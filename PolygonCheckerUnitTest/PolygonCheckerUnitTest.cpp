@@ -6,6 +6,7 @@
 
 extern "C" char* analyzeTriangle(int side1, int side2, int side3);
 extern "C" bool isATriangle(int side1, int side2, int side3);
+extern "C" void calculateTriangleAngle(int side1, int side2, int side3, double angles[]);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -90,6 +91,19 @@ namespace PolygonCheckerUnitTest
 
 			bool actual = isATriangle(-5, 5, 5);
 			Assert::AreEqual(false, actual);
+		}
+
+		TEST_METHOD(CalculateTriangleAngleFunctionality)
+		{
+			int side1 = 3, side2 = 4, side3 = 5;
+			double expectedAngles[] = { 36.8699, 90.0, 53.1301 };
+			double actualAngles[3];
+
+			calculateTriangleAngle(side1, side2, side3, actualAngles);
+
+			for (int i = 0; i < 3; i++) {
+				Assert::AreEqual(expectedAngles[i], actualAngles[i], 0.0001);
+			}
 		}
 	};
 }
