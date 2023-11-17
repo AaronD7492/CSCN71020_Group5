@@ -12,6 +12,7 @@ extern "C" char* analyzeTriangle(int side1, int side2, int side3);
 extern "C" bool isATriangle(int side1, int side2, int side3);
 extern "C" void calculateTriangleAngle(int side1, int side2, int side3, double angles[]);
 extern "C" double calculateDistance(POINT p1, POINT p2);
+extern "C" bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -124,6 +125,36 @@ namespace PolygonCheckerUnitTest
 			double actual = calculateDistance(p1, p2);
 
 			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+		TEST_METHOD(IsRectangleFunctionailtyValidRectangle)
+		{
+			//Testing isRectangle functionality for inputs that make a rectangle
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 1 };
+			POINT p3 = { 1, 1 };
+			POINT p4 = { 1, 0 };
+			bool expected = true;
+
+			bool actual = isRectangle(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(IsRectangleFunctionailtyInvalidRectangle)
+		{
+			//Testing isRectangle functionality for inputs that do not make a rectangle
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 1 };
+			POINT p3 = { 2, 2 };
+			POINT p4 = { 2, 0 };
+			bool expected = false;
+
+			bool actual = isRectangle(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual);
 		}
 	};
 }
