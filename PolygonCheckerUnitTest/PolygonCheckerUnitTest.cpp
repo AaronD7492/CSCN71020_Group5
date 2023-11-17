@@ -14,6 +14,7 @@ extern "C" void calculateTriangleAngle(int side1, int side2, int side3, double a
 extern "C" double calculateDistance(POINT p1, POINT p2);
 extern "C" bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4);
 extern "C" double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4);
+extern "C" double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -205,7 +206,7 @@ namespace PolygonCheckerUnitTest
 
 		TEST_METHOD(CalculatePerimeterFunctionalityLargeValues)
 		{
-			//Testing calculatePerimiter function for larger values
+			//Testing calculatePerimiter function for larger values permiteter
 
 			POINT p1 = { 0, 0 };
 			POINT p2 = { 0, 1e6 };
@@ -217,5 +218,67 @@ namespace PolygonCheckerUnitTest
 
 			Assert::AreEqual(expected, actual, 0.0001);
 		}
+
+		TEST_METHOD(CalculateAreaFunctionalitySqaure)
+		{
+			//Testing calculateArea function for square area
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 1 };
+			POINT p3 = { 1, 1 };
+			POINT p4 = { 1, 0 };
+			double expected = 1.0;
+
+			double actual = calculateArea(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+		TEST_METHOD(CalculateAreaFunctionalityRectangle)
+		{
+			//Testing calculateArea function for rectangle area
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 2 };
+			POINT p3 = { 3, 2 };
+			POINT p4 = { 3, 0 };
+			double expected = 6.0;
+
+			double actual = calculateArea(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+		TEST_METHOD(CalculateAreaFunctionalityLargeValues)
+		{
+			//Testing calculateArea function for larger values area
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 1e6 };
+			POINT p3 = { 1e6, 1e6 };
+			POINT p4 = { 1e6, 0 };
+			double expected = 1e12;
+
+			double actual = calculateArea(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+		TEST_METHOD(CalculateAreaFunctionalityLine)
+		{
+			//Testing calculateArea function for line area
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 0 };
+			POINT p3 = { 0, 0 };
+			POINT p4 = { 0, 0 };
+			double expected = 0;
+
+			double actual = calculateArea(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+
 	};
 }
