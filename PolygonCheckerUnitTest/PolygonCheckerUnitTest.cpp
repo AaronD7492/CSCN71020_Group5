@@ -15,6 +15,7 @@ extern "C" double calculateDistance(POINT p1, POINT p2);
 extern "C" bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4);
 extern "C" double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4);
 extern "C" double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4);
+extern "C" void setRectanglePoints(POINT * points, double coordinates[8]);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -279,6 +280,81 @@ namespace PolygonCheckerUnitTest
 			Assert::AreEqual(expected, actual, 0.0001);
 		}
 
+		TEST_METHOD(SetRectanglePointsFunctionalitySquare)
+		{
+			//
+
+			POINT points[4];
+			double coordinates[8] = { 0, 0, 0, 1, 1, 1, 1, 0 };
+
+			setRectanglePoints(points, coordinates);
+
+			Assert::AreEqual(0.0, points[0].x);
+			Assert::AreEqual(0.0, points[0].y);
+			Assert::AreEqual(0.0, points[1].x);
+			Assert::AreEqual(1.0, points[1].y);
+			Assert::AreEqual(1.0, points[2].x);
+			Assert::AreEqual(1.0, points[2].y);
+			Assert::AreEqual(1.0, points[3].x);
+			Assert::AreEqual(0.0, points[3].y);
+		}
+
+		TEST_METHOD(SetRectanglePointsFunctionalityRectangle)
+		{
+			//
+
+			POINT points[4];
+			double coordinates[8] = { 0, 0, 0, 2, 3, 2, 3, 0 };
+
+			setRectanglePoints(points, coordinates);
+
+			Assert::AreEqual(0.0, points[0].x);
+			Assert::AreEqual(0.0, points[0].y);
+			Assert::AreEqual(0.0, points[1].x);
+			Assert::AreEqual(2.0, points[1].y);
+			Assert::AreEqual(3.0, points[2].x);
+			Assert::AreEqual(2.0, points[2].y);
+			Assert::AreEqual(3.0, points[3].x);
+			Assert::AreEqual(0.0, points[3].y);
+		}
+
+		TEST_METHOD(SetRectanglePointsFunctionalityLargeValues)
+		{
+			//
+
+			POINT points[4];
+			double coordinates[8] = { 0, 0, 0, 1e6, 1e6, 1e6, 1e6, 0 };
+
+			setRectanglePoints(points, coordinates);
+
+			Assert::AreEqual(0.0, points[0].x);
+			Assert::AreEqual(0.0, points[0].y);
+			Assert::AreEqual(0.0, points[1].x);
+			Assert::AreEqual(1e6, points[1].y);
+			Assert::AreEqual(1e6, points[2].x);
+			Assert::AreEqual(1e6, points[2].y);
+			Assert::AreEqual(1e6, points[3].x);
+			Assert::AreEqual(0.0, points[3].y);
+		}
+
+		TEST_METHOD(SetRectanglePointsFunctionalityExcessiveCoordinates)
+		{
+			//Testing the setRectanglePoints function to check that the points are set correctly, ignoring the extra coordinates.
+
+			POINT points[4];
+			double coordinates[10] = { 0, 0, 0, 2, 3, 2, 3, 0, 4, 4 };
+
+			setRectanglePoints(points, coordinates);
+
+			Assert::AreEqual(0.0, points[0].x);
+			Assert::AreEqual(0.0, points[0].y);
+			Assert::AreEqual(0.0, points[1].x);
+			Assert::AreEqual(2.0, points[1].y);
+			Assert::AreEqual(3.0, points[2].x);
+			Assert::AreEqual(2.0, points[2].y);
+			Assert::AreEqual(3.0, points[3].x);
+			Assert::AreEqual(0.0, points[3].y);
+		}
 
 	};
 }
