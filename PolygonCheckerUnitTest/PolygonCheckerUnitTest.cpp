@@ -13,6 +13,7 @@ extern "C" bool isATriangle(int side1, int side2, int side3);
 extern "C" void calculateTriangleAngle(int side1, int side2, int side3, double angles[]);
 extern "C" double calculateDistance(POINT p1, POINT p2);
 extern "C" bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4);
+extern "C" double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -155,6 +156,66 @@ namespace PolygonCheckerUnitTest
 			bool actual = isRectangle(p1, p2, p3, p4);
 
 			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(CalculatePerimeterFunctionalitySquare)
+		{
+			//Testing calculatePerimiter function for sqaure perimeter
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 1 };
+			POINT p3 = { 1, 1 };
+			POINT p4 = { 1, 0 };
+			double expected = 4.0;
+
+			double actual = calculatePerimeter(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+		TEST_METHOD(CalculatePerimeterFunctionalityRectangle)
+		{
+			//Testing calculatePerimiter function for rectangle perimeter
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 2 };
+			POINT p3 = { 3, 2 };
+			POINT p4 = { 3, 0 };
+			double expected = 10.0;
+
+			double actual = calculatePerimeter(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+
+		TEST_METHOD(CalculatePerimeterFunctionalityLine)
+		{
+			//Testing calculatePerimiter function for line perimeter
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 0 };
+			POINT p3 = { 0, 0 };
+			POINT p4 = { 0, 0 };
+			double expected = 0.0;
+
+			double actual = calculatePerimeter(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+		TEST_METHOD(CalculatePerimeterFunctionalityLargeValues)
+		{
+			//Testing calculatePerimiter function for larger values
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 1e6 };
+			POINT p3 = { 1e6, 1e6 };
+			POINT p4 = { 1e6, 0 };
+			double expected = 4e6;
+
+			double actual = calculatePerimeter(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual, 0.0001);
 		}
 	};
 }
