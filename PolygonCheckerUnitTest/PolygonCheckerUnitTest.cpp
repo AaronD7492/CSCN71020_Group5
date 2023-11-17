@@ -3,10 +3,15 @@
 #include <string.h>
 #define LENGTH 80
 
+typedef struct point {
+	double x;
+	double y;
+} POINT;
 
 extern "C" char* analyzeTriangle(int side1, int side2, int side3);
 extern "C" bool isATriangle(int side1, int side2, int side3);
 extern "C" void calculateTriangleAngle(int side1, int side2, int side3, double angles[]);
+extern "C" double calculateDistance(POINT p1, POINT p2);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -95,6 +100,8 @@ namespace PolygonCheckerUnitTest
 
 		TEST_METHOD(CalculateTriangleAngleFunctionality)
 		{
+			//Testing the fucntionality of the calculateTriangleAngle function to determine acurate angles are returned
+
 			int side1 = 3, side2 = 4, side3 = 5;
 			double expectedAngles[] = { 36.8699, 90.0, 53.1301 };
 			double actualAngles[3];
@@ -104,6 +111,19 @@ namespace PolygonCheckerUnitTest
 			for (int i = 0; i < 3; i++) {
 				Assert::AreEqual(expectedAngles[i], actualAngles[i], 0.0001);
 			}
+		}
+
+		TEST_METHOD(CalculateDistanceFunctionality)
+		{
+			//Testing functionality of the calcuateDistance function to determine distance between points is accurate
+			
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 3, 4 };
+			double expected = 5.0;
+
+			double actual = calculateDistance(p1, p2);
+
+			Assert::AreEqual(expected, actual, 0.0001);
 		}
 	};
 }
