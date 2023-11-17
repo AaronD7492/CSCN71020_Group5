@@ -76,11 +76,19 @@ double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4) {
 }
 
 void getRectanglePoints(POINT* points) {
-	for (int i = 0; i < 4; i++) {
-		printf("Enter x and y for point %d: ", i + 1);
-		while (scanf("%lf %lf", &points[i].x, &points[i].y) != 2) {
+	printf_s("Enter the x and y coordinates for each point of the rectangle: ");
+	for (int i = 0; i < 4; i++)
+	{
+		while (scanf_s("%lf %lf", &points[i].x, &points[i].y) != 2) {
 			printf("Invalid input. Please enter two numbers.\n");
-			while (getchar() != '\n');  // clear input buffer
+			while (getchar() != '\n');
 		}
+	}
+}
+
+void setRectanglePoints(POINT* points, double coordinates[8]) {
+	for (int i = 0; i < 4; i++) {
+		points[i].x = coordinates[i * 2];
+		points[i].y = coordinates[i * 2 + 1];
 	}
 }

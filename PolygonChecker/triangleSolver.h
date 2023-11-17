@@ -15,3 +15,4 @@ bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4);
 double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4);
 double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4);
 void getRectanglePoints(POINT* points);
+void setRectanglePoints(POINT* points, double coordinates[8]);

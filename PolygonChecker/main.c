@@ -33,7 +33,10 @@ int main() {
 		case 2:
 			printf_s("Rectangle selected.\n");
 			POINT points[4] = { 0, 0 , 0, 0 };
+			double coordinates[8];
 			getRectanglePoints(points);
+
+			setRectanglePoints(points, coordinates);
 
 			if (isRectangle(points[0], points[1], points[2], points[3])) {																// checks if the function is a rectangle
 				printf("The given points form a rectangle.\n");
