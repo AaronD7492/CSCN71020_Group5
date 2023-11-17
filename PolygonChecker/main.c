@@ -72,7 +72,10 @@ int printShapeMenu() {
 	int shapeChoice;
 
 	printf_s("Enter number: ");
-	scanf_s("%1o", &shapeChoice);
+	while (scanf_s("%d", &shapeChoice) != 1) {
+		printf("Invalid input. Please enter a number.\n");
+		while (getchar() != '\n');
+	}
 
 	return shapeChoice;
 }
@@ -83,7 +86,7 @@ int* getTriangleSides(int* triangleSides) {
 	{
 		while (scanf_s("%d", &triangleSides[i]) != 1) {
 			printf("Invalid input. Please enter a number.\n");
-			while (getchar() != '\n');																										// clear input buffer
+			while (getchar() != '\n'); 
 		}
 	}
 	return triangleSides;
