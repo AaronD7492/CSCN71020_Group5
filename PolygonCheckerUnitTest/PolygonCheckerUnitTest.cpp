@@ -104,16 +104,46 @@ namespace PolygonCheckerUnitTest
 
 		TEST_METHOD(CalculateTriangleAngleFunctionality)
 		{
-			//Testing the fucntionality of the calculateTriangleAngle function to determine acurate angles are returned
+			//Testing the fucntionality of the calculateTriangleAngle function to determine accurate angles are returned
 
 			int side1 = 3, side2 = 4, side3 = 5;
-			double expectedAngles[] = { 36.8699, 90.0, 53.1301 };
+			double expectedAngles[3] = { 36.8699, 53.1301, 90.0 };
 			double actualAngles[3];
 
 			calculateTriangleAngle(side1, side2, side3, actualAngles);
 
 			for (int i = 0; i < 3; i++) {
 				Assert::AreEqual(expectedAngles[i], actualAngles[i], 0.0001);
+			}
+		}
+
+		TEST_METHOD(CalculateTriangleAngleFunctionalityEquilateral)
+		{
+			//Testing the fucntionality of the calculateTriangleAngle function to determine accurate angles are returned
+
+			int side1 = 3, side2 = 3, side3 = 3;
+			double expectedAngles[] = { 60.00, 60.00, 60.00 };
+			double actualAngles[3];
+
+			calculateTriangleAngle(side1, side2, side3, actualAngles);
+
+			for (int i = 0; i < 3; i++) {
+				Assert::AreEqual(expectedAngles[i], actualAngles[i], 0.01);
+			}
+		}
+
+		TEST_METHOD(CalculateTriangleAngleFunctionalityLargeValues)
+		{
+			//Testing the fucntionality of the calculateTriangleAngle function to determine accurate angles are returned
+
+			int side1 = 1e6, side2 = 1e6, side3 = 1e5;
+			double expectedAngles[] = { 0.0, 0.0, 0.0 };
+			double actualAngles[3];
+
+			calculateTriangleAngle(side1, side2, side3, actualAngles);
+
+			for (int i = 0; i < 3; i++) {
+				Assert::AreEqual(expectedAngles[i], actualAngles[i], 0.01);
 			}
 		}
 

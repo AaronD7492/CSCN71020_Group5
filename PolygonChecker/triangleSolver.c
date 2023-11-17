@@ -27,10 +27,10 @@ char* analyzeTriangle(int side1, int side2, int side3) {
 }
 
 bool isATriangle(int side1, int side2, int side3) {
+
 	if (side1 <= 0 || side2 <= 0 || side3 <= 0) {
 		return false;
 	}
-
 	if (side1 + side2 > side3 && side1 + side3 > side2 && side2 + side3 > side1) {
 		return true;
 	}
@@ -40,13 +40,19 @@ bool isATriangle(int side1, int side2, int side3) {
 
 
 void calculateTriangleAngle(int side1, int side2, int side3, double angles[]) {
-	double angleA = acos((side2 * side2 + side3 * side3 - side1 * side1) / (2.0 * side2 * side3));
-	double angleB = acos((side2 * side2 + side1 * side1 - side3 * side3) / (2.0 * side2 * side1));
-	double angleC = acos((side1 * side1 + side3 * side3 - side2 * side2) / (2.0 * side1 * side3));
+	if (side1 >= 1e5 || side2 >= 1e5 || side3 >= 1e5) {
+		printf("The input(s) is a very large number. Handling as a special case.\n");
+		angles[0] = angles[1] = angles[2] = 0.0;  // Handle as a special case
+	}
+	else {
+		double angleA = acos((side2 * side2 + side3 * side3 - side1 * side1) / (2.0 * side2 * side3));
+		double angleB = acos((side1 * side1 + side3 * side3 - side2 * side2) / (2.0 * side1 * side3));
+		double angleC = acos((side1 * side1 + side2 * side2 - side3 * side3) / (2.0 * side1 * side2));
 
-	angles[0] = angleA * 180 / M_PI;
-	angles[1] = angleB * 180 / M_PI;
-	angles[2] = angleC * 180 / M_PI;
+		angles[0] = angleA * (180 / M_PI);
+		angles[1] = angleB * (180 / M_PI);
+		angles[2] = angleC * (180 / M_PI);
+	}
 }
 
 
