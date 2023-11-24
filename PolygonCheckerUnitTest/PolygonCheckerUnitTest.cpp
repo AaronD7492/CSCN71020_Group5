@@ -165,7 +165,7 @@ namespace PolygonCheckerUnitTest
 	{
 	public:
 
-		TEST_METHOD(CalculateDistanceFunctionality)
+		TEST_METHOD(CalculateDistanceFunctionalityDifferentPoints)
 		{
 			//Testing functionality of the calcuateDistance function to determine distance between points is accurate
 
@@ -176,6 +176,30 @@ namespace PolygonCheckerUnitTest
 			double actual = calculateDistance(p1, p2);
 
 			Assert::AreEqual(expected, actual, 0.0001);
+		}
+
+		TEST_METHOD(CalculateDistanceFunctionalitySamePoint)
+		{
+			//Testing functionality of the calcuateDistance function to determine distance between the same points is accurate
+			POINT p1 = { 0.0, 0.0 };
+			POINT p2 = { 0.0, 0.0 };
+			double expectedDistance = 0.0;
+
+			double actualDistance = calculateDistance(p1, p2);
+
+			Assert::AreEqual(expectedDistance, actualDistance);
+		}
+
+		TEST_METHOD(CalculateDistanceFunctionalityDifferentPointsWithDecimal)
+		{
+			//Testing functionality of the calcuateDistance function to determine distance between points is accurate when there is a decimal
+			POINT p1 = { 0.0, 0.0 };
+			POINT p2 = { 3.0, 4.0 };
+			double expectedDistance = 5.0;
+
+			double actualDistance = calculateDistance(p1, p2);
+
+			Assert::AreEqual(expectedDistance, actualDistance);
 		}
 	};
 
@@ -212,6 +236,20 @@ namespace PolygonCheckerUnitTest
 
 			Assert::AreEqual(expected, actual);
 		}
+
+		TEST_METHOD(IsRectangleFunctionailtyInvalidNegativeValues)
+		{
+			//Testing isRectangle functionality for negative value inputs
+			POINT p1 = { -1.0, 0.0 };
+			POINT p2 = { 0.0, -1.0 };
+			POINT p3 = { -1.0, -1.0 };
+			POINT p4 = { 0.0, 0.0 };
+
+			bool result = isRectangle(p1, p2, p3, p4);
+
+			Assert::IsFalse(result);
+		}
+
 	};
 
 	TEST_CLASS(CalculatePerimeterUnitTest)
@@ -411,18 +449,16 @@ namespace PolygonCheckerUnitTest
 
 		TEST_METHOD(CalculateQuadrilateralAnglesFunctionailtyRectangle)
 		{
-			// Arrange
+			//Testing the calculateQuadrilateralAngles function to see if it returns the expected angles for rectangles
 			POINT p1 = { 0.0, 0.0 };
 			POINT p2 = { 0.0, 4.0 };
 			POINT p3 = { 6.0, 4.0 };
 			POINT p4 = { 6.0, 0.0 };
 			double expectedAngles[4] = { 90.0, 90.0, 90.0, 90.0 };
 
-			// Act
 			double actualAngles[4];
 			calculateQuadrilateralAngles(p1, p2, p3, p4, actualAngles);
 
-			// Assert
 			for (int i = 0; i < 4; i++)
 			{
 				Assert::AreEqual(expectedAngles[i], actualAngles[i], 1.0);
@@ -431,18 +467,16 @@ namespace PolygonCheckerUnitTest
 
 		TEST_METHOD(CalculateQuadrilateralAnglesFunctionailtySquare)
 		{
-			// Arrange
+			//Testing the calculateQuadrilateralAngles function to see if it returns the expected angles for squares
 			POINT p1 = { 0.0, 0.0 };
 			POINT p2 = { 0.0, 1.0 };
 			POINT p3 = { 1.0, 1.0 };
 			POINT p4 = { 1.0, 0.0 };
 			double expectedAngles[4] = { 90.0, 90.0, 90.0, 90.0 };
 
-			// Act
 			double actualAngles[4];
 			calculateQuadrilateralAngles(p1, p2, p3, p4, actualAngles);
 
-			// Assert
 			for (int i = 0; i < 4; i++)
 			{
 				Assert::AreEqual(expectedAngles[i], actualAngles[i], 1.0);

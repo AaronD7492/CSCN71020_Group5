@@ -80,6 +80,9 @@ void calculateQuadrilateralAngles(POINT p1, POINT p2, POINT p3, POINT p4, double
 }
 
 bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4) {
+	if (p1.x < 0 || p1.y < 0 || p2.x < 0 || p2.y < 0 || p3.x < 0 || p3.y < 0 || p4.x < 0 || p4.y < 0) {
+		return false;
+	}
 	double d1 = calculateDistance(p1, p2);
 	double d2 = calculateDistance(p2, p3);
 	double d3 = calculateDistance(p3, p4);
