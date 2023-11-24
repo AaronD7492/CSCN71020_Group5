@@ -250,6 +250,20 @@ namespace PolygonCheckerUnitTest
 			Assert::IsFalse(result);
 		}
 
+		TEST_METHOD(IsRectangleFunctionailtyInvalidZeroes)
+		{
+			//Testing isRectangle functionality for inputs that do not make a rectangle
+
+			POINT p1 = { 0, 0 };
+			POINT p2 = { 0, 0 };
+			POINT p3 = { 0, 0 };
+			POINT p4 = { 0, 0 };
+			bool expected = false;
+
+			bool actual = isRectangle(p1, p2, p3, p4);
+
+			Assert::AreEqual(expected, actual);
+		}
 	};
 
 	TEST_CLASS(CalculatePerimeterUnitTest)
