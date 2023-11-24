@@ -60,16 +60,50 @@ double calculateDistance(POINT p1, POINT p2) {
 	return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
 }
 
-bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4) {
-	double d1 = calculateDistance(p1, p3);
-	double d2 = calculateDistance(p2, p4);
+void calculateQuadrilateralAngles(POINT p1, POINT p2, POINT p3, POINT p4, double angles[]) {
+	double d1 = calculateDistance(p1, p2);
+	double d2 = calculateDistance(p2, p3);
+	double d3 = calculateDistance(p3, p4);
+	double d4 = calculateDistance(p4, p1);
+	double d5 = calculateDistance(p1, p3);
+	double d6 = calculateDistance(p2, p4);
 
-	if (d1 == d2) {
+	double angleA = acos((d1 * d1 + d4 * d4 - d5 * d5) / (2.0 * d1 * d4));
+	double angleB = acos((d1 * d1 + d2 * d2 - d6 * d6) / (2.0 * d1 * d2));
+	double angleC = acos((d2 * d2 + d3 * d3 - d5 * d5) / (2.0 * d2 * d3));
+	double angleD = acos((d3 * d3 + d4 * d4 - d6 * d6) / (2.0 * d3 * d4));
+
+	angles[0] = angleA * (180 / M_PI);
+	angles[1] = angleB * (180 / M_PI);
+	angles[2] = angleC * (180 / M_PI);
+	angles[3] = angleD * (180 / M_PI);
+}
+
+bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4) {
+	double d1 = calculateDistance(p1, p2);
+	double d2 = calculateDistance(p2, p3);
+	double d3 = calculateDistance(p3, p4);
+	double d4 = calculateDistance(p4, p1);
+	double d5 = calculateDistance(p1, p3);
+	double d6 = calculateDistance(p2, p4);
+
+	double angles[4];
+	calculateQuadrilateralAngles(p1, p2, p3, p4, angles);
+
+	double tolerance = 1.0; // Tolerance for angle to be close to 90 degrees
+
+	if (d5 == d6 &&
+		(angles[0] - 90 < tolerance && angles[0] - 90 > -tolerance) &&
+		(angles[1] - 90 < tolerance && angles[1] - 90 > -tolerance) &&
+		(angles[2] - 90 < tolerance && angles[2] - 90 > -tolerance) &&
+		(angles[3] - 90 < tolerance && angles[3] - 90 > -tolerance)) {
 		return true;
 	}
 
 	return false;
 }
+
+
 
 double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4) {
 	return calculateDistance(p1, p2) + calculateDistance(p2, p3) + calculateDistance(p3, p4) + calculateDistance(p4, p1);
@@ -81,7 +115,13 @@ double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4) {
 	return a * b;
 }
 
-void getRectanglePoints(POINT* points) {
+POINT* getRectanglePoints(POINT* points) {
+	
+	if (points == NULL) {
+		fprintf(stderr, "Error: null pointer passed to getRectanglePoints.\n");
+		return NULL;
+	}
+
 	printf_s("Enter the x and y coordinates for each point of the rectangle: ");
 	for (int i = 0; i < 4; i++)
 	{
@@ -90,11 +130,5 @@ void getRectanglePoints(POINT* points) {
 			while (getchar() != '\n');
 		}
 	}
-}
-
-void setRectanglePoints(POINT* points, double coordinates[8]) {
-	for (int i = 0; i < 4; i++) {
-		points[i].x = coordinates[i * 2];
-		points[i].y = coordinates[i * 2 + 1];
-	}
+	return points;
 }

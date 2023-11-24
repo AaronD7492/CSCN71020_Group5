@@ -32,15 +32,11 @@ int main() {
 		case 2:
 			printf_s("Rectangle selected.\n");
 			POINT points[4] = { 0, 0 , 0, 0 };
-			double coordinates[8];
-			getRectanglePoints(points);
-
-			setRectanglePoints(points, coordinates);
-
-			if (isRectangle(points[0], points[1], points[2], points[3])) {																// checks if the function is a rectangle
+			POINT* pointsPtr = getRectanglePoints(points);
+			if (isRectangle(pointsPtr[0], pointsPtr[1], pointsPtr[2], pointsPtr[3])) {																// checks if the function is a rectangle
 				printf("The given points form a rectangle.\n");
-				printf("The perimeter of the rectangle is: %.2lf\n", calculatePerimeter(points[0], points[1], points[2], points[3]));	// Calls fucntion to calculate permieter
-				printf("The area of the rectangle is: %.2lf\n", calculateArea(points[0], points[1], points[2], points[3]));				// Calls fucntion to calculate area
+				printf("The perimeter of the rectangle is: %.2lf\n", calculatePerimeter(pointsPtr[0], pointsPtr[1], pointsPtr[2], pointsPtr[3]));	// Calls fucntion to calculate permieter
+				printf("The area of the rectangle is: %.2lf\n", calculateArea(pointsPtr[0], pointsPtr[1], pointsPtr[2], pointsPtr[3]));				// Calls fucntion to calculate area
 			}
 			else {
 				printf("The given points do not form a rectangle.\n");

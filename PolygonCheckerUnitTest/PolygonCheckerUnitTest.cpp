@@ -1,6 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "pch.h"
 #include "CppUnitTest.h"
 #include <string.h>
+#include <fstream>
 #define LENGTH 80
 
 typedef struct point {
@@ -15,7 +18,7 @@ extern "C" double calculateDistance(POINT p1, POINT p2);
 extern "C" bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4);
 extern "C" double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4);
 extern "C" double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4);
-extern "C" void setRectanglePoints(POINT * points, double coordinates[8]);
+extern "C" POINT* getRectanglePoints(POINT * points);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -310,81 +313,60 @@ namespace PolygonCheckerUnitTest
 			Assert::AreEqual(expected, actual, 0.0001);
 		}
 
-		TEST_METHOD(SetRectanglePointsFunctionalitySquare)
+		TEST_METHOD(GetRectanglePointsFunctionality)
 		{
-			//
-
+			//Testing getRectangles function to see if expected values are returned when entered
 			POINT points[4];
-			double coordinates[8] = { 0, 0, 0, 1, 1, 1, 1, 0 };
+			POINT expectedPoints[4] = { {1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}, {7.0, 8.0} };
+			std::ofstream testInput("test_input.txt");
+			testInput << "1.0 2.0\n3.0 4.0\n5.0 6.0\n7.0 8.0\n";
+			testInput.close();
+			FILE* stream;
+			freopen_s(&stream, "test_input.txt", "r", stdin);
 
-			setRectanglePoints(points, coordinates);
+			POINT* actualPoints = getRectanglePoints(points);
 
-			Assert::AreEqual(0.0, points[0].x);
-			Assert::AreEqual(0.0, points[0].y);
-			Assert::AreEqual(0.0, points[1].x);
-			Assert::AreEqual(1.0, points[1].y);
-			Assert::AreEqual(1.0, points[2].x);
-			Assert::AreEqual(1.0, points[2].y);
-			Assert::AreEqual(1.0, points[3].x);
-			Assert::AreEqual(0.0, points[3].y);
+			for (int i = 0; i < 4; i++)
+			{
+				Assert::AreEqual(expectedPoints[i].x, actualPoints[i].x);
+				Assert::AreEqual(expectedPoints[i].y, actualPoints[i].y);
+			}
+
+			fclose(stream);
+			remove("test_input.txt");
 		}
 
-		TEST_METHOD(SetRectanglePointsFunctionalityRectangle)
+		TEST_METHOD(GetRectanglePointsFunctionalityEmptyInput)
 		{
-			//
-
+			//Testing getRectangles function for when empty inputs are entered
 			POINT points[4];
-			double coordinates[8] = { 0, 0, 0, 2, 3, 2, 3, 0 };
+			POINT expectedPoints[4] = { {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0} };
+			std::ofstream testInput("test_input.txt");
+			testInput << "0.0 0.0\n0.0 0.0\n0.0 0.0\n0.0 0.0\n";
+			testInput.close();
+			FILE* stream;
+			freopen_s(&stream, "test_input.txt", "r", stdin);
 
-			setRectanglePoints(points, coordinates);
+			POINT* actualPoints = getRectanglePoints(points);
 
-			Assert::AreEqual(0.0, points[0].x);
-			Assert::AreEqual(0.0, points[0].y);
-			Assert::AreEqual(0.0, points[1].x);
-			Assert::AreEqual(2.0, points[1].y);
-			Assert::AreEqual(3.0, points[2].x);
-			Assert::AreEqual(2.0, points[2].y);
-			Assert::AreEqual(3.0, points[3].x);
-			Assert::AreEqual(0.0, points[3].y);
+			for (int i = 0; i < 4; i++)
+			{
+				Assert::AreEqual(expectedPoints[i].x, actualPoints[i].x);
+				Assert::AreEqual(expectedPoints[i].y, actualPoints[i].y);
+			}
+
+			fclose(stream);
+			remove("test_input.txt");
 		}
 
-		TEST_METHOD(SetRectanglePointsFunctionalityLargeValues)
+		TEST_METHOD(GetRectanglePointsFunctionalityNullInput)
 		{
-			//
+			//Testing getRectangles function for when null inputs are entered
+			POINT* points = NULL;
 
-			POINT points[4];
-			double coordinates[8] = { 0, 0, 0, 1e6, 1e6, 1e6, 1e6, 0 };
+			POINT* result = getRectanglePoints(points);
 
-			setRectanglePoints(points, coordinates);
-
-			Assert::AreEqual(0.0, points[0].x);
-			Assert::AreEqual(0.0, points[0].y);
-			Assert::AreEqual(0.0, points[1].x);
-			Assert::AreEqual(1e6, points[1].y);
-			Assert::AreEqual(1e6, points[2].x);
-			Assert::AreEqual(1e6, points[2].y);
-			Assert::AreEqual(1e6, points[3].x);
-			Assert::AreEqual(0.0, points[3].y);
+			Assert::IsNull(result);
 		}
-
-		TEST_METHOD(SetRectanglePointsFunctionalityExcessiveCoordinates)
-		{
-			//Testing the setRectanglePoints function to check that the points are set correctly, ignoring the extra coordinates.
-
-			POINT points[4];
-			double coordinates[10] = { 0, 0, 0, 2, 3, 2, 3, 0, 4, 4 };
-
-			setRectanglePoints(points, coordinates);
-
-			Assert::AreEqual(0.0, points[0].x);
-			Assert::AreEqual(0.0, points[0].y);
-			Assert::AreEqual(0.0, points[1].x);
-			Assert::AreEqual(2.0, points[1].y);
-			Assert::AreEqual(3.0, points[2].x);
-			Assert::AreEqual(2.0, points[2].y);
-			Assert::AreEqual(3.0, points[3].x);
-			Assert::AreEqual(0.0, points[3].y);
-		}
-
 	};
 }
