@@ -19,12 +19,13 @@ extern "C" bool isRectangle(POINT p1, POINT p2, POINT p3, POINT p4);
 extern "C" double calculatePerimeter(POINT p1, POINT p2, POINT p3, POINT p4);
 extern "C" double calculateArea(POINT p1, POINT p2, POINT p3, POINT p4);
 extern "C" POINT* getRectanglePoints(POINT * points);
+extern "C" void calculateQuadrilateralAngles(POINT p1, POINT p2, POINT p3, POINT p4, double angles[]);
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PolygonCheckerUnitTest
 {
-	TEST_CLASS(PolygonCheckerUnitTest)
+	TEST_CLASS(AnalyzeTriangleUnitTest)
 	{
 	public:
 		
@@ -72,6 +73,11 @@ namespace PolygonCheckerUnitTest
 			strncpy_s(actual, analyzeTriangle(3, 4, 5), LENGTH);
 			Assert::AreEqual("Scalene triangle", actual);
 		}
+	};
+
+	TEST_CLASS(IsATriangleUnitTest)
+	{
+	public:
 
 		TEST_METHOD(IsATriangleAnalysisFunctionalityValidTriangle)
 		{
@@ -104,7 +110,11 @@ namespace PolygonCheckerUnitTest
 			bool actual = isATriangle(-5, 5, 5);
 			Assert::AreEqual(false, actual);
 		}
+	};
 
+	TEST_CLASS(CalculateTriangleAngleUnitTest)
+	{
+	public:
 		TEST_METHOD(CalculateTriangleAngleFunctionality)
 		{
 			//Testing the fucntionality of the calculateTriangleAngle function to determine accurate angles are returned
@@ -149,11 +159,16 @@ namespace PolygonCheckerUnitTest
 				Assert::AreEqual(expectedAngles[i], actualAngles[i], 0.01);
 			}
 		}
+	};
+
+	TEST_CLASS(CalculateDistanceUnitTest)
+	{
+	public:
 
 		TEST_METHOD(CalculateDistanceFunctionality)
 		{
 			//Testing functionality of the calcuateDistance function to determine distance between points is accurate
-			
+
 			POINT p1 = { 0, 0 };
 			POINT p2 = { 3, 4 };
 			double expected = 5.0;
@@ -162,6 +177,11 @@ namespace PolygonCheckerUnitTest
 
 			Assert::AreEqual(expected, actual, 0.0001);
 		}
+	};
+
+	TEST_CLASS(IsRectangleUnitTest)
+	{
+	public:
 
 		TEST_METHOD(IsRectangleFunctionailtyValidRectangle)
 		{
@@ -192,6 +212,11 @@ namespace PolygonCheckerUnitTest
 
 			Assert::AreEqual(expected, actual);
 		}
+	};
+
+	TEST_CLASS(CalculatePerimeterUnitTest)
+	{
+	public:
 
 		TEST_METHOD(CalculatePerimeterFunctionalitySquare)
 		{
@@ -252,6 +277,11 @@ namespace PolygonCheckerUnitTest
 
 			Assert::AreEqual(expected, actual, 0.0001);
 		}
+	};
+
+	TEST_CLASS(CalculateAreaUnitTest)
+	{
+	public:
 
 		TEST_METHOD(CalculateAreaFunctionalitySqaure)
 		{
@@ -312,10 +342,15 @@ namespace PolygonCheckerUnitTest
 
 			Assert::AreEqual(expected, actual, 0.0001);
 		}
+	};
+
+	TEST_CLASS(GetRectnaglePointsUnitTest)
+	{
+	public:
 
 		TEST_METHOD(GetRectanglePointsFunctionality)
 		{
-			//Testing getRectangles function to see if expected values are returned when entered
+			//Testing getRectanglePoints function to see if expected values are returned when entered
 			POINT points[4];
 			POINT expectedPoints[4] = { {1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}, {7.0, 8.0} };
 			std::ofstream testInput("test_input.txt");
@@ -338,7 +373,7 @@ namespace PolygonCheckerUnitTest
 
 		TEST_METHOD(GetRectanglePointsFunctionalityEmptyInput)
 		{
-			//Testing getRectangles function for when empty inputs are entered
+			//Testing getRectanglePoints function for when empty inputs are entered
 			POINT points[4];
 			POINT expectedPoints[4] = { {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0} };
 			std::ofstream testInput("test_input.txt");
@@ -361,12 +396,57 @@ namespace PolygonCheckerUnitTest
 
 		TEST_METHOD(GetRectanglePointsFunctionalityNullInput)
 		{
-			//Testing getRectangles function for when null inputs are entered
+			//Testing getRectanglePoints function for when null inputs are entered
 			POINT* points = NULL;
 
 			POINT* result = getRectanglePoints(points);
 
 			Assert::IsNull(result);
+		}
+	};
+
+	TEST_CLASS(CalculateQuadrilateralAnglesUnitTest)
+	{
+	public:
+
+		TEST_METHOD(CalculateQuadrilateralAnglesFunctionailtyRectangle)
+		{
+			// Arrange
+			POINT p1 = { 0.0, 0.0 };
+			POINT p2 = { 0.0, 4.0 };
+			POINT p3 = { 6.0, 4.0 };
+			POINT p4 = { 6.0, 0.0 };
+			double expectedAngles[4] = { 90.0, 90.0, 90.0, 90.0 };
+
+			// Act
+			double actualAngles[4];
+			calculateQuadrilateralAngles(p1, p2, p3, p4, actualAngles);
+
+			// Assert
+			for (int i = 0; i < 4; i++)
+			{
+				Assert::AreEqual(expectedAngles[i], actualAngles[i], 1.0);
+			}
+		}
+
+		TEST_METHOD(CalculateQuadrilateralAnglesFunctionailtySquare)
+		{
+			// Arrange
+			POINT p1 = { 0.0, 0.0 };
+			POINT p2 = { 0.0, 1.0 };
+			POINT p3 = { 1.0, 1.0 };
+			POINT p4 = { 1.0, 0.0 };
+			double expectedAngles[4] = { 90.0, 90.0, 90.0, 90.0 };
+
+			// Act
+			double actualAngles[4];
+			calculateQuadrilateralAngles(p1, p2, p3, p4, actualAngles);
+
+			// Assert
+			for (int i = 0; i < 4; i++)
+			{
+				Assert::AreEqual(expectedAngles[i], actualAngles[i], 1.0);
+			}
 		}
 	};
 }
