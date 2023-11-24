@@ -252,7 +252,7 @@ namespace PolygonCheckerUnitTest
 
 		TEST_METHOD(IsRectangleFunctionailtyInvalidZeroes)
 		{
-			//Testing isRectangle functionality for inputs that do not make a rectangle
+			//Testing isRectangle functionality for inputs that are zero
 
 			POINT p1 = { 0, 0 };
 			POINT p2 = { 0, 0 };
